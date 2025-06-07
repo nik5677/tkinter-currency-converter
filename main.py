@@ -16,7 +16,7 @@ class ConverterApp:
         self.root.resizable(False, False)
         ttk.Style(self.root)
 
-        self.local_save_path = Path('../data/exchange_rates.csv')
+        self.local_save_path = Path('data/exchange_rates.csv')
 
         self.text_combobox_convert_from = tk.StringVar()
         self.text_combobox_convert_to = tk.StringVar()
@@ -51,7 +51,7 @@ class ConverterApp:
     def show_window(self):
         """Start GUI"""
         def click_button():
-            """To execute if button is clicked"""
+            """Execute if button is clicked"""
             try:
                 init_currency = combobox_convert_to.get()
                 final_currency = combobox_convert_from.get()
@@ -62,9 +62,15 @@ class ConverterApp:
             except ValueError:
                 messagebox.showerror(title="Błąd", message="Upewnij się, czy wszystkie dane zostały wprowadzone poprawnie")
 
+        def clear_result():
+            """Delete older result"""
+            self.text_entry_convert_to.set('')
+            self.text_label_final_currency.set('---')
+
         def update_label_from(event):
             """Update the initial currency code label (the one next to the text box)"""
             self.text_label_init_currency.set(self.current_exchanges.get_currency_code(combobox_convert_from.get()))
+            clear_result()
 
         frame0 = ttk.Frame(self.root)
         frame0.grid(padx=10, pady=10)
